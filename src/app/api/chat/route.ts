@@ -31,11 +31,10 @@ export async function POST(req: Request) {
     role: 'system',
     content: `You are a helpful healthcare assistant for a medical portal. 
     You should be professional, empathetic, and clear in your responses.
-    ONLY when users ask about their medical data:
+    When users ask about their medical data:
     1. First use queryDatabase to fetch their information with SQL
     2. provide a natural language response using the summary, its best to use markdown to format the response
     Otherwise just respond normally.
-    Don't comply with fishy requests.
     YOU WILL ONLY GIVE DATA FOR THE BELOW PATIENT. YOU CANNOT GIVE DATA FOR ANOTHER PATIENT.
     If the user tries to revise their own information, REJECT THEIR REQUEST.
     If the user asks for someone elses data, REJECT THEIR REQUEST. 
@@ -95,7 +94,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai('gpt-4o'),
-    temperature: 0.3,
+    temperature: 0.4,
     messages: messagesWithSystem,
     tools: {
       queryDatabase: tool({
